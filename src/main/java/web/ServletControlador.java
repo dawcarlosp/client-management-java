@@ -2,7 +2,6 @@
 package web;
 import datos.ClienteDA0;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -40,6 +39,9 @@ public class ServletControlador extends HttpServlet {
     private void listarClientes(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
          List<Cliente> clientes = new ClienteDA0().listar();
+         System.out.println("Clientes: " + clientes);
+         //Pasar la respuesta al jsp de clientes
+         request.getRequestDispatcher("clientes.jsp").forward(request, response);
     }
     /**
      * Handles the HTTP <code>POST</code> method.
