@@ -32,9 +32,7 @@ git clone https://github.com/dawcarlosp/client-management-java.git
 
 ### 1️⃣ Crear el JDBC Connection Pool
 
-#### Accede a la consola: <a href="http://localhost:4848" target="_blank" rel="noopener noreferrer">
-http://localhost:4848
-</a>
+#### Accede a la consola: [http://localhost:4848](http://localhost:4848)
 
 #### Ve a Resources > JDBC > JDBC Connection Pools > New
 
@@ -47,6 +45,11 @@ http://localhost:4848
 
 #### En Additional Properties, define:
 
-* **User:** MySQLPool
-* **Password:** javax.sql.DataSource
-* **Url:** MySQL
+* **User:** 
+* **Password:** 
+* **serverName:** localhost
+* **portNumber:** 3306
+* **databaseName:** control_clientes
+* **serverTimezone:** UTC
+* **allowPublicKeyRetrieval:** true
+* **useSSL:** false
