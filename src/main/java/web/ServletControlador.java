@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 import modelo.Cliente;
@@ -40,8 +41,16 @@ public class ServletControlador extends HttpServlet {
     throws ServletException, IOException{
          List<Cliente> clientes = new ClienteDA0().listar();
          System.out.println("Clientes: " + clientes);
+         //Obtener sesión
+         HttpSession sesion = request.getSession();
+         sesion.setAttribute("clientes", clientes);
+         sesion.setAttribute("totalClientes", clientes.size());
+         sesion.setAttribute("saldoTotal", this.calcularSaldoTotal(clientes));
          //Pasar la respuesta al jsp de clientes
          request.getRequestDispatcher("clientes.jsp").forward(request, response);
+    }
+    private Double calcularSaldoTotal(List<Cliente> clientes){
+        return clientes.stream().mapToDouble(Cliente::getSaldo).sum();
     }
     /**
      * Handles the HTTP <code>POST</code> method.

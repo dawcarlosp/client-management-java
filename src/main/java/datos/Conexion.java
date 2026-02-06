@@ -1,27 +1,30 @@
 package datos;
+/*
+import jakarta.naming.Context;
+import jakarta.naming.InitialContext;
+import jakarta.naming.NamingException;
+*/
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-/**
- *
- * @author cpere
- */
 public class Conexion {
-        
+
+    private static DataSource dataSource;
+
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException("Driver MySQL no encontrado", ex);
+            Context ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup("jdbc/controlClientes");
+        } catch (NamingException e) {
+            throw new RuntimeException("Error al obtener el DataSource", e);
         }
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-            System.getProperty("DB_URL"),
-            System.getProperty("DB_USER"),
-            System.getProperty("DB_PASSWORD")
-        );
+        return dataSource.getConnection();
     }
 }
