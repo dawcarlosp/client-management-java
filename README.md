@@ -17,8 +17,8 @@ Antes de empezar, asegúrate de tener:
 - ☕ [JDK 17+](https://www.oracle.com/java/technologies/downloads/)
 - 🐟 [GlassFish 8](https://glassfish.org/download) instalado y en ejecución.
 - 🐬 [MySQL Server](https://dev.mysql.com/downloads/mysql/) activo 
-- 📂 El driver JDBC de MySQL (`mysql-connector-j`) en la carpeta `/lib` de tu dominio de GlassFish.
-- 📂 Abrí MySQL Workbench → Open SQL Script → [control_clientes.sql](https://github.com/dawcarlosp/client-management-java/control_clientes.sql) → Execute 
+- 📂 El driver JDBC de MySQL [mysql-connector-j](https://github.com/dawcarlosp/client-management-java/blob/main/mysql-connector-j-8.4.0.jar) en la carpeta `/lib` de tu dominio de GlassFish.
+- 📂 Abrí MySQL Workbench → Open SQL Script → [control_clientes.sql](https://github.com/dawcarlosp/client-management-java/blob/main/control_clientes.sql) → Execute 
 - Otra forma, 💻 En la terminal
 ```bash 
 mysql -u usuario -p < archivo.sql
@@ -49,11 +49,27 @@ git clone https://github.com/dawcarlosp/client-management-java.git
 
 #### En Additional Properties, define:
 
-* **User:** 
-* **Password:** 
+* **User:** ```Tu usuario (Msyql)```
+* **Password:** ```Tu contraseña (Msyql)```
 * **serverName:** ```localhost```
 * **portNumber:** ```3306```
 * **databaseName:** ```control_clientes```
 * **serverTimezone:** ```UTC```
 * **allowPublicKeyRetrieval:** ```true```
 * **useSSL:** ```false```
+
+### 2️⃣ Crear el JDBC Resource
+
+#### Ve a Resources > JDBC > JDBC Resources > New.
+
+#### Configura los siguientes valores (Crítico para que el código funcione):
+
+* **JNDI Name:** ```jdbc/controlClientes```
+* **Pool Name:** ```Selecciona MySQLPool (el creado anteriormente).```
+
+## 📁Paso 3. Desplegar la aplicación
+
+### Desde el IDE (NetBeans/IntelliJ/Eclipse)
+
+* Agrega tu servidor GlassFish al IDE.
+* Haz clic derecho en el proyecto > Run.
