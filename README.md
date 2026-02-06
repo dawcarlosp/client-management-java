@@ -25,7 +25,7 @@ Antes de empezar, asegúrate de tener:
 
 ```bash
 git clone [https://github.com/dawcarlosp/client-management-java.git](https://github.com/dawcarlosp/client-management-java.git)
-
+```
 --- 
 
 ## 📁Paso 2. Configurar GlassFish (Consola de Administración)
@@ -33,3 +33,18 @@ git clone [https://github.com/dawcarlosp/client-management-java.git](https://git
 ### 1️⃣ Crear el JDBC Connection Pool
 
 #### Accede a la consola: [http://localhost:4848](http://localhost:4848)
+
+#### Ve a Resources > JDBC > JDBC Connection Pools > New
+
+#### Configura los valores básicos:
+
+* **Pool Name:** MySQLPool
+* **Resource Type:** javax.sql.DataSource
+* **Database Driver Vendor:** MySQL
+* **Datasource Classname (Paso 2) :** com.mysql.cj.jdbc.MysqlDataSource
+
+#### En Additional Properties, define:
+
+* **User:** MySQLPool
+* **Password:** javax.sql.DataSource
+* **Url:** MySQL
