@@ -25,3 +25,11 @@ Antes de empezar, asegúrate de tener:
 
 ```bash
 git clone [https://github.com/dawcarlosp/client-management-java.git](https://github.com/dawcarlosp/client-management-java.git)
+
+--- 
+
+## 📁Paso 2. Configurar GlassFish (Consola de Administración)
+
+### 1️⃣ Crear el JDBC Connection Pool
+
+#### Accede a la consola: [http://localhost:4848](http://localhost:4848)
