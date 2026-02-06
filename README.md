@@ -24,7 +24,7 @@ Antes de empezar, asegúrate de tener:
 ## 📁 Paso 1. Clonar el repositorio
 
 ```bash
-git clone [https://github.com/dawcarlosp/client-management-java.git](https://github.com/dawcarlosp/client-management-java.git)
+git clone https://github.com/dawcarlosp/client-management-java.git
 ```
 --- 
 
@@ -32,13 +32,15 @@ git clone [https://github.com/dawcarlosp/client-management-java.git](https://git
 
 ### 1️⃣ Crear el JDBC Connection Pool
 
-#### Accede a la consola: [http://localhost:4848](http://localhost:4848)
+#### Accede a la consola: <a href="http://localhost:4848" target="_blank" rel="noopener noreferrer">
+http://localhost:4848
+</a>
 
 #### Ve a Resources > JDBC > JDBC Connection Pools > New
 
 #### Configura los valores básicos:
 
-* **Pool Name:** MySQLPool
+* **Pool Name:** ```bash MySQLPool ```
 * **Resource Type:** javax.sql.DataSource
 * **Database Driver Vendor:** MySQL
 * **Datasource Classname (Paso 2) :** com.mysql.cj.jdbc.MysqlDataSource
