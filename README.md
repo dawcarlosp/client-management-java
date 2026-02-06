@@ -16,9 +16,13 @@ Antes de empezar, asegúrate de tener:
 
 - ☕ [JDK 17+](https://www.oracle.com/java/technologies/downloads/)
 - 🐟 [GlassFish 8](https://glassfish.org/download) instalado y en ejecución.
-- 🐬 [MySQL Server](https://dev.mysql.com/downloads/mysql/) activo.
+- 🐬 [MySQL Server](https://dev.mysql.com/downloads/mysql/) activo 
 - 📂 El driver JDBC de MySQL (`mysql-connector-j`) en la carpeta `/lib` de tu dominio de GlassFish.
-
+- 📂 Abrí MySQL Workbench → Open SQL Script → [control_clientes.sql](https://github.com/dawcarlosp/client-management-java/control_clientes.sql) → Execute 
+- Otra forma, 💻 En la terminal
+```bash 
+mysql -u usuario -p < archivo.sql
+```
 ---
 
 ## 📁 Paso 1. Clonar el repositorio
@@ -38,18 +42,18 @@ git clone https://github.com/dawcarlosp/client-management-java.git
 
 #### Configura los valores básicos:
 
-* **Pool Name:** ```bash MySQLPool ```
-* **Resource Type:** javax.sql.DataSource
-* **Database Driver Vendor:** MySQL
-* **Datasource Classname (Paso 2) :** com.mysql.cj.jdbc.MysqlDataSource
+* **Pool Name:** ```MySQLPool```
+* **Resource Type:** ```javax.sql.DataSource```
+* **Database Driver Vendor:** ```MySQL```
+* **Datasource Classname (Paso 2) :** ```com.mysql.cj.jdbc.MysqlDataSource```
 
 #### En Additional Properties, define:
 
 * **User:** 
 * **Password:** 
-* **serverName:** localhost
-* **portNumber:** 3306
-* **databaseName:** control_clientes
-* **serverTimezone:** UTC
-* **allowPublicKeyRetrieval:** true
-* **useSSL:** false
+* **serverName:** ```localhost```
+* **portNumber:** ```3306```
+* **databaseName:** ```control_clientes```
+* **serverTimezone:** ```UTC```
+* **allowPublicKeyRetrieval:** ```true```
+* **useSSL:** ```false```
