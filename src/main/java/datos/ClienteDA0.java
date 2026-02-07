@@ -16,7 +16,8 @@ public class ClienteDA0 {
 
     private static final String SQL_SELECT
             = "SELECT id_cliente, nombre, apellido, email, telefono, saldo FROM clientes";
-
+    private static final String SQL_INSERT
+            = "INSERT INTO clientes(nombre, apellido ,email, telefono, saldo) VALUES(?,?,?,?,?)";
     public List<Cliente> listar() {
         List<Cliente> clientes = new ArrayList<>();
         try (Connection conn = Conexion.getConnection()) {
@@ -37,5 +38,12 @@ public class ClienteDA0 {
             ex.printStackTrace(System.out);
         }
         return clientes;
+    }
+
+    public void insertar(Cliente nuevoCliente) {
+       int rows = 0;
+       try(Connection conn = Conexion.getConnection(); PreparedStatement){
+           
+       }
     }
 }
