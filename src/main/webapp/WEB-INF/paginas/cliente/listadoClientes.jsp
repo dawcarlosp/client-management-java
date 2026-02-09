@@ -39,6 +39,30 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <!-- Páginación -->
+                    <nav aria-label="Navegacion de clientes">
+                        <ul class="pagination justify-content-center">
+
+                            <li class="page-item ${paginaActual == 1 ? 'disabled' : ''}">
+                                <a class="page-link" href="${pageContext.request.contextPath}/ServletControlador?accion=listar&pagina=${paginaActual - 1}">
+                                    Anterior
+                                </a>
+                            </li>
+
+                            <c:forEach begin="1" end="${totalPaginas}" var="i">
+                                <li class="page-item ${paginaActual == i ? 'active' : ''}">
+                                    <a class="page-link" href="${pageContext.request.contextPath}/ServletControlador?accion=listar&pagina=${i}">${i}</a>
+                                </li>
+                            </c:forEach>
+
+                            <li class="page-item ${paginaActual == totalPaginas ? 'disabled' : ''}">
+                                <a class="page-link" href="${pageContext.request.contextPath}/ServletControlador?accion=listar&pagina=${paginaActual + 1}">
+                                    Siguiente
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-md-3">

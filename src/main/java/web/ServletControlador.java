@@ -1,5 +1,5 @@
-
 package web;
+
 import datos.ClienteDA0;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -31,27 +31,52 @@ public class ServletControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      String accion = Optional.ofNullable(request.getParameter("accion")).orElse("listar");
-      switch(accion){
-          case "listar" -> this.listarClientes(request, response );
-          default -> this.listarClientes(request, response);
-      }
+        String accion = Optional.ofNullable(request.getParameter("accion")).orElse("listar");
+        switch (accion) {
+            case "listar" ->
+                this.listarClientes(request, response);
+            default ->
+                this.listarClientes(request, response);
+        }
     }
+
     private void listarClientes(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException{
-         List<Cliente> clientes = new ClienteDA0().listar();
-         System.out.println("Clientes: " + clientes);
-         //Obtener sesión
-         HttpSession sesion = request.getSession();
-         sesion.setAttribute("clientes", clientes);
-         sesion.setAttribute("totalClientes", clientes.size());
-         sesion.setAttribute("saldoTotal", this.calcularSaldoTotal(clientes));
-         //Pasar la respuesta al jsp de clientes
-         request.getRequestDispatcher("clientes.jsp").forward(request, response);
+            throws ServletException, IOException {
+        // 1. Configuración de paginación
+        int pagina = 1;
+        int registrosPorPagina = 5; // Puedes cambiar esto
+        if (request.getParameter("pagina") != null) {
+            pagina = Integer.parseInt(request.getParameter("pagina"));
+        }
+
+        ClienteDA0 dao = new ClienteDA0();
+
+        // 2. Obtener datos segmentados
+        int offset = (pagina - 1) * registrosPorPagina;
+        List<Cliente> clientesPaginados = dao.listarPaginado(registrosPorPagina, offset);
+
+        // 3. Obtener total para calcular número de páginas
+        List<Cliente> todosLosClientes = dao.listar(); // O crea un método dao.getTotal()
+        int totalRegistros = todosLosClientes.size();
+        int totalPaginas = (int) Math.ceil((double) totalRegistros / registrosPorPagina);
+
+        // 4. Setear atributos
+        HttpSession sesion = request.getSession();
+        sesion.setAttribute("clientes", clientesPaginados);
+        sesion.setAttribute("totalClientes", totalRegistros);
+        sesion.setAttribute("saldoTotal", this.calcularSaldoTotal(todosLosClientes));
+
+        // Atributos para el control de la paginación en el JSP
+        request.setAttribute("paginaActual", pagina);
+        request.setAttribute("totalPaginas", totalPaginas);
+
+        request.getRequestDispatcher("clientes.jsp").forward(request, response);
     }
-    private Double calcularSaldoTotal(List<Cliente> clientes){
+
+    private Double calcularSaldoTotal(List<Cliente> clientes) {
         return clientes.stream().mapToDouble(Cliente::getSaldo).sum();
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -63,14 +88,17 @@ public class ServletControlador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String accion = Optional.ofNullable(request.getParameter("accion")).orElse("listar");
-      switch(accion){
-          case "insertar" -> this.insertarCliente(request, response );
-          default -> this.listarClientes(request, response);
-      }
+        String accion = Optional.ofNullable(request.getParameter("accion")).orElse("listar");
+        switch (accion) {
+            case "insertar" ->
+                this.insertarCliente(request, response);
+            default ->
+                this.listarClientes(request, response);
+        }
     }
+
     private void insertarCliente(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String email = request.getParameter("email");
