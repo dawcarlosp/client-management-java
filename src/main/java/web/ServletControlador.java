@@ -35,9 +35,30 @@ public class ServletControlador extends HttpServlet {
         switch (accion) {
             case "listar" ->
                 this.listarClientes(request, response);
+            case "editar" ->
+                this.editarCliente(request, response);
+            case "eliminar" ->
+                this.eliminarCliente(request, response);
+
             default ->
                 this.listarClientes(request, response);
         }
+    }
+
+    private void eliminarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        int row = new ClienteDA0().eliminar(new Cliente(idCliente));
+        this.listarClientes(request, response);
+    }
+
+    private void editarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        Cliente cliente = new ClienteDA0().encontrarCliente(new Cliente(idCliente));
+        request.setAttribute("cliente", cliente);
+        String jspEditar = "/WEB-INF/paginas/cliente/editarCliente.jsp";
+        request.getRequestDispatcher(jspEditar).forward(request, response);
     }
 
     private void listarClientes(HttpServletRequest request, HttpServletResponse response)
@@ -92,9 +113,24 @@ public class ServletControlador extends HttpServlet {
         switch (accion) {
             case "insertar" ->
                 this.insertarCliente(request, response);
+            case "modificar" ->
+                this.modificarCliente(request, response);
             default ->
                 this.listarClientes(request, response);
         }
+    }
+
+    private void modificarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
+        double saldo = Double.parseDouble(request.getParameter("saldo"));
+        Cliente cliente = new Cliente(idCliente, nombre, apellido, email, telefono, saldo);
+        new ClienteDA0().actualizar(cliente);
+        this.listarClientes(request, response);
     }
 
     private void insertarCliente(HttpServletRequest request, HttpServletResponse response)
